@@ -17,7 +17,7 @@ var_dump($list2);
 --EXPECTF--
 array(2) {
   [0]=>
-  object(RarEntry)#%d (10) {
+  object(RarEntry)(10) {
     ["rarfile"]=>
     resource(%d) of type (Rar)
     ["name"]=>
@@ -40,7 +40,7 @@ array(2) {
     int(51)
   }
   [1]=>
-  object(RarEntry)#%d (10) {
+  object(RarEntry)(10) {
     ["rarfile"]=>
     resource(%d) of type (Rar)
     ["name"]=>
@@ -65,7 +65,7 @@ array(2) {
 }
 array(2) {
   [0]=>
-  object(RarEntry)#%d (10) {
+  object(RarEntry)(10) {
     ["rarfile"]=>
     resource(%d) of type (Rar)
     ["name"]=>
@@ -88,7 +88,7 @@ array(2) {
     int(53)
   }
   [1]=>
-  object(RarEntry)#%d (10) {
+  object(RarEntry)(10) {
     ["rarfile"]=>
     resource(%d) of type (Rar)
     ["name"]=>

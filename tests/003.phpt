@@ -15,7 +15,7 @@ var_dump($entry2);
 
 ?>
 --EXPECTF--
-object(RarEntry)#%d (10) {
+object(RarEntry)(10) {
   ["rarfile"]=>
   resource(%d) of type (Rar)
   ["name"]=>
@@ -37,7 +37,7 @@ object(RarEntry)#%d (10) {
   ["method"]=>
   int(51)
 }
-object(RarEntry)#%d (10) {
+object(RarEntry)(10) {
   ["rarfile"]=>
   resource(%d) of type (Rar)
   ["name"]=>
