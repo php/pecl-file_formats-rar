@@ -35,7 +35,6 @@ RSC=rc.exe
 # PROP BASE Use_Debug_Libraries 0
 # PROP BASE Output_Dir "Release_TS"
 # PROP BASE Intermediate_Dir "Release_TS"
-# PROP BASE Ignore_Export_Lib 0
 # PROP BASE Target_Dir ""
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
@@ -43,8 +42,8 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release_TS"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RAR_EXPORTS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\php4" /I "..\..\..\php4\main" /I "..\..\..\php4\Zend" /I "..\..\..\php4\TSRM" /I "..\..\..\php4\win32" /D ZEND_DEBUG=0 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "PHP_EXPORTS" /D "COMPILE_DL_RAR" /D ZTS=1 /D "ZEND_WIN32" /D "PHP_WIN32" /D HAVE_RAR=1 /YX /FD /c
+# ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RAR_EXPORTS" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "..\..\..\php4\\" /I "..\..\..\php4\main" /I "..\..\..\php4\TSRM" /I "..\..\..\php4\ZEND" /D ZEND_WIN32=1 /D PHP_WIN32=1 /D "HAVE_RAR" /D COMPILE_DL_RAR=1 /D ZEND_DEBUG=0 /D "ZTS" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "NO_STRICT" /D "PHP_EXPORTS" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x407 /d "NDEBUG"
@@ -54,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 php4ts.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"..\..\Release_TS\php_rar.dll" /libpath:"..\..\..\php4\Release_TS" /libpath:"..\..\..\php4\Release_TS_Inline"
+# ADD LINK32 php4ts.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386 /out:"..\..\Release_TS/php_rar.dll" /libpath:"..\..\..\php4\Release_TS" /libpath:"..\..\..\php4\Release_TS_Inline"
 
 !ELSEIF  "$(CFG)" == "rar - Win32 Debug_TS"
 
@@ -69,8 +68,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug_TS"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RAR_EXPORTS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\..\..\php4" /I "..\..\..\php4\main" /I "..\..\..\php4\Zend" /I "..\..\..\php4\TSRM" /I "..\..\..\php4\win32" /D ZEND_DEBUG=1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "PHP_EXPORTS" /D "COMPILE_DL_RAR" /D ZTS=1 /D "ZEND_WIN32" /D "PHP_WIN32" /D HAVE_RAR=1 /FR /YX /FD /GZ /c
+# ADD BASE CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "RAR_EXPORTS" /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /I "..\..\..\php4\\" /I "..\..\..\php4\main" /I "..\..\..\php4\TSRM" /I "..\..\..\php4\ZEND" /D ZEND_DEBUG=1 /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "COMPILE_DL_RAR" /D "ZEND_WIN32" /D "PHP_WIN32" /D HAVE_RAR=1 /D ZTS=1 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "NO_STRICT" /D "PHP_EXPORTS" /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
@@ -80,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 php4ts_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\Debug_TS\php_rar.dll" /pdbtype:sept /libpath:"..\..\..\php4\Debug_TS"
+# ADD LINK32 php5ts_debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"..\..\Debug_TS/php_rar.dll" /pdbtype:sept /libpath:"..\..\..\php4\Debug_TS"
 
 !ENDIF 
 
@@ -91,14 +90,9 @@ LINK32=link.exe
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
-# Begin Source File
+# Begin Group "unrar"
 
-SOURCE=.\rar.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\arccmt.cpp
-# End Source File
+# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=.\unrar\archive.cpp
@@ -109,15 +103,7 @@ SOURCE=.\unrar\arcread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\unrar\beosea.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\unrar\cmddata.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\coder.cpp
 # End Source File
 # Begin Source File
 
@@ -189,27 +175,11 @@ SOURCE=.\unrar\isnt.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\unrar\list.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\log.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\unrar\match.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\unrar\model.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\unrar\options.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\os2ea.cpp
 # End Source File
 # Begin Source File
 
@@ -218,14 +188,21 @@ SOURCE=.\unrar\pathfn.cpp
 # Begin Source File
 
 SOURCE=.\unrar\rar.cpp
+
+!IF  "$(CFG)" == "rar - Win32 Release_TS"
+
+# PROP Intermediate_Dir "Release_TS\unrar"
+
+!ELSEIF  "$(CFG)" == "rar - Win32 Debug_TS"
+
+# PROP Intermediate_Dir "Debug_TS\unrar"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
 SOURCE=.\unrar\rarvm.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\rarvmtbl.cpp
 # End Source File
 # Begin Source File
 
@@ -265,19 +242,11 @@ SOURCE=.\unrar\sha1.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\unrar\smallfn.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\unrar\strfn.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\unrar\strlist.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\suballoc.cpp
 # End Source File
 # Begin Source File
 
@@ -297,31 +266,16 @@ SOURCE=.\unrar\unicode.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\unrar\unpack15.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\unpack20.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\unrar\unpack.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\uowners.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\unrar\volume.cpp
 # End Source File
+# End Group
 # Begin Source File
 
-SOURCE=.\unrar\win32acl.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\unrar\win32stm.cpp
+SOURCE=.\rar.cpp
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -330,241 +284,6 @@ SOURCE=.\unrar\win32stm.cpp
 # Begin Source File
 
 SOURCE=.\php_rar.h
-# End Source File
-# Begin Source File
-SOURCE=.\unrar\archive.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\array.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\cmddata.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\coder.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\compress.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\consio.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\crc.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\crypt.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\dll.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\encname.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\errhnd.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\extinfo.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\extract.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\filcreat.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\filefn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\file.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\filestr.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\find.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\getbits.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\global.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\headers.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\int64.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\isnt.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\list.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\loclang.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\log.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\match.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\memfree.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\model.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\options.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\os.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\pathfn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rardefs.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rarfn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rar.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rarlang.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\raros.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rartypes.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rarvm.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rawread.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rdwrfn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\recvol.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\resource.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rijndael.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\rs.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\savepos.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\scantree.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\sha1.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\smallfn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\strfn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\strlist.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\suballoc.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\system.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\timefn.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\ulinks.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\unicode.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\unpack.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\version.hpp
-# End Source File
-
-# Begin Source File
-SOURCE=.\unrar\volume.hpp
 # End Source File
 # End Group
 # End Target
