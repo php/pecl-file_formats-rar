@@ -30,8 +30,8 @@
 #include "config.h"
 #endif
 
-#include "php.h"
 extern "C" {
+#include "php.h"
 #include "ext/standard/info.h"
 }
 
