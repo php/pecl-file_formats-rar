@@ -30,15 +30,14 @@
 #include "config.h"
 #endif
 
-#include "php.h"
-#include "php_ini.h"
-#include "ext/standard/info.h"
-
-#if HAVE_RAR
 extern "C" {
-#include "php_rar.h"
+#include "php.h"
+#include "ext/standard/info.h"
 }
 
+#if HAVE_RAR
+
+#include "php_rar.h"
 #include "unrar/rar.hpp"
 
 static int le_rar_file;
@@ -57,16 +56,16 @@ function_entry rar_functions[] = {
 };
 
 static zend_function_entry php_rar_class_functions[] = {
-	PHP_ME(rarentry,		extract,			NULL,	0)
-	PHP_ME(rarentry,		getName,			NULL,	0)
-	PHP_ME(rarentry,		getUnpackedSize,	NULL,	0)
-	PHP_ME(rarentry,		getPackedSize,		NULL,	0)
-	PHP_ME(rarentry,		getHostOs,			NULL,	0)
-	PHP_ME(rarentry,		getFileTime,		NULL,	0)
-	PHP_ME(rarentry,		getCrc,				NULL,	0)
-	PHP_ME(rarentry,		getAttr,			NULL,	0)
-	PHP_ME(rarentry,		getVersion,			NULL,	0)
-	PHP_ME(rarentry,		getMethod,			NULL,	0)
+	PHP_FALIAS(extract,			rar_extract,			NULL)
+	PHP_FALIAS(getName,			rar_get_name,			NULL)
+	PHP_FALIAS(getUnpackedSize,		rar_get_unpacked_size,		NULL)
+	PHP_FALIAS(getPackedSize,		rar_get_packed_size,		NULL)
+	PHP_FALIAS(getHostOs,			rar_get_host_os,		NULL)
+	PHP_FALIAS(getFileTime,			rar_get_file_time,		NULL)
+	PHP_FALIAS(getCrc,			rar_get_crc,			NULL)
+	PHP_FALIAS(getAttr,			rar_get_attr,			NULL)
+	PHP_FALIAS(getVersion,			rar_get_version,		NULL)
+	PHP_FALIAS(getMethod,			rar_get_method,			NULL)
 	{NULL, NULL, NULL}
 };
 /* }}} */
@@ -277,7 +276,7 @@ PHP_MINIT_FUNCTION(rar)
 	rar_class_entry_ptr = zend_register_internal_class(&rar_class_entry TSRMLS_CC);	
 
 	le_rar_file = zend_register_list_destructors_ex(_rar_file_list_dtor, NULL, le_rar_file_name, module_number);
-	
+
 	return SUCCESS;
 }
 /* }}} */
@@ -479,7 +478,7 @@ PHP_FUNCTION(rar_close)
 
 /* {{{ proto RarEntry::extract(string path [, string filename ]);
    Extract file from the archive */
-PHP_METHOD(rarentry, extract)
+PHP_FUNCTION(rar_extract)
 {
 	zval **rarfile, **path, **filename, **tmp, **tmp_name;
 	rar_file_t *rar = NULL;
@@ -570,7 +569,7 @@ PHP_METHOD(rarentry, extract)
 
 /* {{{ proto RarEntry::getName();
    Return entry name */
-PHP_METHOD(rarentry, getName)
+PHP_FUNCTION(rar_get_name)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -587,7 +586,7 @@ PHP_METHOD(rarentry, getName)
 
 /* {{{ proto RarEntry::getUnpackedSize();
    Return unpacked size of the entry */
-PHP_METHOD(rarentry, getUnpackedSize)
+PHP_FUNCTION(rar_get_unpacked_size)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -604,7 +603,7 @@ PHP_METHOD(rarentry, getUnpackedSize)
 
 /* {{{ proto RarEntry::getPackedSize();
    Return packed size of the entry */
-PHP_METHOD(rarentry, getPackedSize)
+PHP_FUNCTION(rar_get_packed_size)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -621,7 +620,7 @@ PHP_METHOD(rarentry, getPackedSize)
 
 /* {{{ proto RarEntry::getHostOs();
    Return host OS of the entry */
-PHP_METHOD(rarentry, getHostOs)
+PHP_FUNCTION(rar_get_host_os)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -638,7 +637,7 @@ PHP_METHOD(rarentry, getHostOs)
 
 /* {{{ proto RarEntry::getFileTime();
    Return modification time of the entry */
-PHP_METHOD(rarentry, getFileTime)
+PHP_FUNCTION(rar_get_file_time)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -655,7 +654,7 @@ PHP_METHOD(rarentry, getFileTime)
 
 /* {{{ proto RarEntry::getCrc();
    Return CRC of the entry */
-PHP_METHOD(rarentry, getCrc)
+PHP_FUNCTION(rar_get_crc)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -672,7 +671,7 @@ PHP_METHOD(rarentry, getCrc)
 
 /* {{{ proto RarEntry::getAttr();
    Return attributes of the entry */
-PHP_METHOD(rarentry, getAttr)
+PHP_FUNCTION(rar_get_attr)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -689,7 +688,7 @@ PHP_METHOD(rarentry, getAttr)
 
 /* {{{ proto RarEntry::getVersion();
    Return version of the archiver, used to create this entry */
-PHP_METHOD(rarentry, getVersion)
+PHP_FUNCTION(rar_get_version)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;
@@ -706,7 +705,7 @@ PHP_METHOD(rarentry, getVersion)
 
 /* {{{ proto RarEntry::getMethod();
    Return packing method */
-PHP_METHOD(rarentry, getMethod)
+PHP_FUNCTION(rar_get_method)
 {
 	zval **rarfile, **tmp;
 	rar_file_t *rar = NULL;

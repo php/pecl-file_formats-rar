@@ -53,16 +53,16 @@ PHP_FUNCTION(rar_list);
 PHP_FUNCTION(rar_entry_get);
 PHP_FUNCTION(rar_close);
 
-PHP_METHOD(rarentry, extract);
-PHP_METHOD(rarentry, getName);
-PHP_METHOD(rarentry, getUnpackedSize);
-PHP_METHOD(rarentry, getPackedSize);
-PHP_METHOD(rarentry, getHostOs);
-PHP_METHOD(rarentry, getFileTime);
-PHP_METHOD(rarentry, getCrc);
-PHP_METHOD(rarentry, getAttr);
-PHP_METHOD(rarentry, getVersion);
-PHP_METHOD(rarentry, getMethod);
+PHP_FUNCTION(rar_extract);
+PHP_FUNCTION(rar_get_name);
+PHP_FUNCTION(rar_get_unpacked_size);
+PHP_FUNCTION(rar_get_packed_size);
+PHP_FUNCTION(rar_get_host_os);
+PHP_FUNCTION(rar_get_file_time);
+PHP_FUNCTION(rar_get_crc);
+PHP_FUNCTION(rar_get_attr);
+PHP_FUNCTION(rar_get_version);
+PHP_FUNCTION(rar_get_method);
 
 typedef struct rar {
 	int							id;
