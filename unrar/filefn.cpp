@@ -1,4 +1,7 @@
 #include "rar.hpp"
+#ifdef _WIN_32
+#include <time.h>
+#endif
 
 MKDIR_CODE MakeDir(const char *Name,const wchar *NameW,uint Attr)
 {
