@@ -754,7 +754,7 @@ static int _rar_get_archive_and_fragment(php_stream_wrapper *wrapper,
 			if ((*archive = expand_filepath(tmp_archive, NULL TSRMLS_CC))
 					== NULL) {
 				php_stream_wrapper_log_error(wrapper, options TSRMLS_CC,
-					"Could not expand the path %s", archive);
+					"Could not expand the path %s", *archive);
 				goto cleanup;
 			}
 		}
@@ -1060,6 +1060,8 @@ cleanup:
 /* copied from main/streams/streams.c because it's an internal function */
 static void _rar_stream_tidy_wrapper_error_log(php_stream_wrapper *wrapper TSRMLS_DC)
 {
+/* these members are missing in 5.5+. removed or to be added later? */
+#if PHP_VERSION_ID < 50500
 	if (wrapper) {
 		/* tidy up the error stack */
 		int i;
@@ -1073,6 +1075,7 @@ static void _rar_stream_tidy_wrapper_error_log(php_stream_wrapper *wrapper TSRML
 		wrapper->err_stack = NULL;
 		wrapper->err_count = 0;
 	}
+#endif
 }
 /* }}} */
 
