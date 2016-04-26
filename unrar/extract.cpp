@@ -151,7 +151,7 @@ EXTRACT_ARC_CODE CmdExtract::ExtractArchive(CommandData *Cmd)
 
     while (true)
     {
-      // First volume is already added to DataIO.TotalArcSize 
+      // First volume is already added to DataIO.TotalArcSize
       // in initial TotalArcSize calculation in DoExtract.
       // So we skip it and start from second volume.
       NextVolumeName(NextName,NextNameW,ASIZE(NextName),(Arc.NewMhd.Flags & MHD_NEWNUMBERING)==0 || Arc.OldFormat);
@@ -599,10 +599,10 @@ bool CmdExtract::ExtractCurrentFile(CommandData *Cmd,Archive &Arc,size_t HeaderS
       {
         if (FD.mtime >= Arc.NewLhd.mtime)
         {
-          // If directory already exists and its modification time is newer 
-          // than start of extraction, it is likely it was created 
-          // when creating a path to one of already extracted items. 
-          // In such case we'll better update its time even if archived 
+          // If directory already exists and its modification time is newer
+          // than start of extraction, it is likely it was created
+          // when creating a path to one of already extracted items.
+          // In such case we'll better update its time even if archived
           // directory is older.
 
           if (!FD.IsDir || FD.mtime<StartTime)
@@ -843,7 +843,7 @@ bool CmdExtract::ExtractCurrentFile(CommandData *Cmd,Archive &Arc,size_t HeaderS
       else
 #endif
         wcscpy(FilePassword,Password);
-      
+
       DataIO.SetEncryption(
         (Arc.NewLhd.Flags & LHD_PASSWORD)!=0 ? Arc.NewLhd.UnpVer:0,FilePassword,
         (Arc.NewLhd.Flags & LHD_SALT)!=0 ? Arc.NewLhd.Salt:NULL,false,
@@ -894,7 +894,7 @@ bool CmdExtract::ExtractCurrentFile(CommandData *Cmd,Archive &Arc,size_t HeaderS
       else
         if (Arc.NewLhd.Method!=0x30 && Arc.NewLhd.FullUnpSize>0 && ValidCRC)
           AnySolidDataUnpackedWell=true;
- 
+
       bool BrokenFile=false;
       if (!SkipSolid)
       {
@@ -975,17 +975,22 @@ bool CmdExtract::ExtractCurrentFile(CommandData *Cmd,Archive &Arc,size_t HeaderS
 
 void CmdExtract::UnstoreFile(ComprDataIO &DataIO,int64 DestUnpSize)
 {
-  Array<byte> Buffer(0x10000); /* must be multiple of 16 because of decryption algo */
-  while (1)
-  {
-    uint Code=DataIO.UnpRead(&Buffer[0],Buffer.Size());
-    if (Code==0 || (int)Code==-1)
+  // 512 KB and larger buffer reported to reduce performance on old XP
+  // computers with WDC WD2000JD HDD. According to test made by user
+  // 256 KB buffer is optimal.
+  Array<byte> Buffer(0x40000);
+
+  while (1) {
+    uint Code = DataIO.UnpRead(&Buffer[0],Buffer.Size());
+    if (Code==0 || (int)Code==-1) {
       break;
-	/* basically Code = MIN(Code, (uint) DestUnpSize); */
-    Code=Code<DestUnpSize ? Code:(uint)DestUnpSize;
+    }
+
+    Code = Code<DestUnpSize ? Code:(uint)DestUnpSize;
     DataIO.UnpWrite(&Buffer[0],Code);
-    if (DestUnpSize>=0)
+
+    if (DestUnpSize>=0) {
       DestUnpSize-=Code;
+    }
   }
 }
-

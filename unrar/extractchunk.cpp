@@ -1,21 +1,15 @@
 #include "rar.hpp"
 
-bool CmdExtract::ExtractCurrentFileChunkInit(CommandData *Cmd,
-                                             Archive &Arc,
-                                             size_t HeaderSize,
-                                             bool &Repeat)
+bool CmdExtract::ExtractCurrentFileChunkInit(CommandData *Cmd, Archive &Arc, size_t HeaderSize, bool &Repeat)
 {
-  char Command = 'T';
+  char Command  = 'T';
 
-  Cmd->DllError=0;
-  Repeat = false;
+  Cmd->DllError = 0;
+  Repeat        = false;
+  FirstFile     = true; //turn on checks reserved for the first files extracted from an archive?
 
-  //turn on checks reserved for the first files extracted from an archive?
-  FirstFile = true;
-
-  if (HeaderSize==0) {
-    if (DataIO.UnpVolume)
-    {
+  if (HeaderSize == 0) {
+    if (DataIO.UnpVolume) {
 #ifdef NOVOLUME
       return(false);
 #else
@@ -26,14 +20,15 @@ bool CmdExtract::ExtractCurrentFileChunkInit(CommandData *Cmd,
       }
       SignatureFound=false;
 #endif
-    }
-    else
+    } else {
       return false;
+    }
   }
 
   int HeadType=Arc.GetHeaderType();
-  if (HeadType!=FILE_HEAD)
+  if (HeadType!=FILE_HEAD) {
     return false;
+  }
 
   DataIO.SetUnpackToMemory((byte*) this->Buffer, this->BufferSize);
   DataIO.SetSkipUnpCRC(true);
@@ -77,7 +72,7 @@ bool CmdExtract::ExtractCurrentFileChunkInit(CommandData *Cmd,
         ErrHandler.SetErrorCode(WARNING);
         Cmd->DllError = ERAR_MISSING_PASSWORD;
         return false;
-		    }
+        }
       GetWideName(PasswordA,NULL,Cmd->Password,ASIZE(Cmd->Password));
     }
     wcscpy(Password,Cmd->Password);
@@ -92,7 +87,7 @@ bool CmdExtract::ExtractCurrentFileChunkInit(CommandData *Cmd,
 
   if (IsLink(Arc.NewLhd.FileAttr))
     return true;
-  
+
   if (Arc.IsArcDir())
       return true;
 
@@ -111,9 +106,7 @@ bool CmdExtract::ExtractCurrentFileChunkInit(CommandData *Cmd,
   return true;
 }
 
-bool CmdExtract::ExtractCurrentFileChunk(CommandData *Cmd, Archive &Arc,
-                                         size_t *ReadSize,
-                                         int *finished)
+bool CmdExtract::ExtractCurrentFileChunk(CommandData *Cmd, Archive &Arc, size_t *ReadSize, int *finished)
 {
   if (IsLink(Arc.NewLhd.FileAttr) || Arc.IsArcDir()) {
     *ReadSize = 0;
@@ -124,24 +117,37 @@ bool CmdExtract::ExtractCurrentFileChunk(CommandData *Cmd, Archive &Arc,
   DataIO.SetUnpackToMemory((byte*) this->Buffer, this->BufferSize);
 
   if (Arc.NewLhd.Method==0x30) {
-    UnstoreFile(DataIO, this->BufferSize);
-    /* not very sophisticated and may result in a subsequent
-     * unnecessary call to this function (and probably will if
-     * the buffer size is chosen so that it just fits for small
-     * files) */
-    *finished = (DataIO.GetUnpackToMemorySizeLeft() > 0);
-  }
-  else
-  {
+    int written = UnstoreFileChunk(DataIO, (byte*) this->Buffer, this->BufferSize);
+
+    *finished = written <= 0;
+    *ReadSize += written;
+
+  } else {
     Unp->SetDestSize(Arc.NewLhd.FullUnpSize);
-    if (Arc.NewLhd.UnpVer<=15)
-      Unp->DoUnpack(15,FileCount>1 && Arc.Solid, this->Buffer != NULL);
-    else
-      Unp->DoUnpack(Arc.NewLhd.UnpVer,
-        (Arc.NewLhd.Flags & LHD_SOLID)!=0, this->Buffer != NULL);
+
+    if (Arc.NewLhd.UnpVer<=15){
+      Unp->DoUnpack(15, FileCount>1 && Arc.Solid, this->Buffer != NULL);
+    } else {
+      Unp->DoUnpack(Arc.NewLhd.UnpVer, (Arc.NewLhd.Flags & LHD_SOLID)!=0, this->Buffer != NULL);
+    }
+
     *finished = Unp->IsFileExtracted();
+    *ReadSize = this->BufferSize - DataIO.GetUnpackToMemorySizeLeft();
   }
-  *ReadSize = this->BufferSize - DataIO.GetUnpackToMemorySizeLeft();
 
   return true;
+}
+
+int CmdExtract::UnstoreFileChunk(ComprDataIO &DataIO, byte *Addr, size_t Size)
+{
+  Array<byte> Buffer(Size);
+
+  uint Code = DataIO.UnpRead(&Buffer[0],Buffer.Size());
+  if (Code <= 0) {
+    return false;
+  }
+
+  DataIO.UnpWrite(&Buffer[0], Code);
+
+  return Code;
 }
