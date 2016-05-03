@@ -46,11 +46,12 @@ class CmdExtract
     bool ExtractCurrentFileChunk(CommandData *Cmd, Archive &Arc,
       size_t *ReadSize, int *finished);
     static void UnstoreFile(ComprDataIO &DataIO,int64 DestUnpSize);
+    static int UnstoreFileChunk(ComprDataIO &DataIO, byte*, size_t);
 
     bool SignatureFound;
     //next two lines added by me
-	void *Buffer;
-	size_t BufferSize;
+    void *Buffer;
+    size_t BufferSize;
 };
 
 #endif
